@@ -39,6 +39,9 @@ func main() {
 
 	f := float64(progress) / float64(width) * 100
 	bar := "  ( "
+	if f < 100 {
+		bar += " "
+	}
 	bar += strconv.FormatFloat(f, 'f', 1, 64)
 
 	bar += " % ) ["
@@ -53,5 +56,5 @@ func main() {
 	}
 	bar += "]"
 
-	fmt.Println(bar)
+	fmt.Printf("\r%v", bar)
 }
