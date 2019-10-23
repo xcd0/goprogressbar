@@ -13,42 +13,41 @@ func main() {
 	flag.Parse()
 
 	progressVal, _ := strconv.ParseFloat(flag.Arg(0), 64)
-
-	if progressVal > 1000 {
-		progressVal = 1000
-	}
-
 	if progressVal < 0 {
 		fmt.Println("Error!")
 		os.Exit(1)
+	} else if progressVal > 1000 {
+		progressVal = 1000
 	}
 
+	// ウィンドウサイズ取得
 	if err := termbox.Init(); err != nil {
 		panic(err)
 	}
 	w, _ := termbox.Size()
 	termbox.Close()
 
-	var width int
-	width = int(w / 3 * 2)
+	// 進捗バーは画面の半分の長さとする
+	width := int(w / 2)
 
-	var progress int
+	f := progressVal / 1000
+	printnum := int(float64(width) * f)
+	fp := f * 100
 
-	val := progressVal / 1000
-	progress = int(float64(width) * val)
-
-	f := float64(progress) / float64(width) * 100
+	// 出力
 	bar := "  ( "
-	if f < 100 {
+	if progressVal < 100 {
+		bar += "  "
+	} else if progressVal < 1000 {
 		bar += " "
 	}
-	bar += strconv.FormatFloat(f, 'f', 1, 64)
-
+	bar += strconv.FormatFloat(fp, 'f', 1, 64)
 	bar += " % ) ["
+
 	for i := 0; i < width; i++ {
-		if i < progress {
+		if i < printnum {
 			bar += "#"
-		} else if i == progress {
+		} else if i == printnum {
 			bar += ">"
 		} else {
 			bar += " "
