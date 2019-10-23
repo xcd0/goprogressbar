@@ -16,8 +16,7 @@ func main() {
 	val := progressVal / 1000
 
 	if progressVal > 1000 {
-		fmt.Println("Finish!")
-		os.Exit(0)
+		progressVal = 1000
 	}
 
 	if progressVal < 0 {
