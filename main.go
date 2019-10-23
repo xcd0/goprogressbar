@@ -13,7 +13,6 @@ func main() {
 	flag.Parse()
 
 	progressVal, _ := strconv.ParseFloat(flag.Arg(0), 64)
-	val := progressVal / 1000
 
 	if progressVal > 1000 {
 		progressVal = 1000
@@ -34,6 +33,8 @@ func main() {
 	width = int(w / 3 * 2)
 
 	var progress int
+
+	val := progressVal / 1000
 	progress = int(float64(width) * val)
 
 	f := float64(progress) / float64(width) * 100
